@@ -1,0 +1,50 @@
+databaseChangeLog:
+  - changeSet:
+      id: hw-5
+      author: Andrii Muzika de le Valera
+      changes:
+        - createTable:
+            tableName: todos
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: text
+              - column:
+                  name: due_date
+                  type: datetime
+              - column:
+                  name: priority
+                  type: varchar(15)
+              - column:
+                  name: status
+                  type: varchar(20)
+              - column:
+                  name: created_date
+                  type: timestamp
+              - column:
+                  name: updated_date
+                  type: timestamp
+              - column:
+                  name: user_id
+                  type: bigint
+        - addAutoIncrement:
+            columnDataType: bigint
+            columnName: id
+            defaultOnNull: false
+            generationType: always
+            startWith: 1
+            tableName: todos
+      rollback:
+        - dropTable:
+            tableName: todos
