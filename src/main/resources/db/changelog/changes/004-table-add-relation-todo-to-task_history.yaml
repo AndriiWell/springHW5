@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: hw-5-004
+      author: Andrii Muzika
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: task_history
+            baseColumnNames: todo_id
+            referencedTableName: todos
+            referencedColumnNames: id
+            onDelete: CASCADE
+            onUpdate: CASCADE
+            constraintName: fk_task_history_todo
+      rollback:
+        - dropForeignKeyConstraint:
+            baseTableName: task_history
+            constraintName: fk_task_history_todo

@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -61,6 +62,7 @@ public class Todo {
      * When the task was created
      */
     @Column(name = "created_date")
+    @CreationTimestamp
     private LocalDateTime createdDate;
 
     /**

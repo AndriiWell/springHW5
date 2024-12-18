@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: hw-5
+      id: hw-5-002
       author: Andrii Muzika
       changes:
         - createTable:
@@ -26,6 +26,8 @@ databaseChangeLog:
               - column:
                   name: changed_date
                   type: timestamp
+                  constraints:
+                    nullable: false
               - column:
                   name: changed_by
                   type: varchar(20)

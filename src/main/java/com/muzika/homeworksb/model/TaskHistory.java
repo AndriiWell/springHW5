@@ -13,8 +13,9 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 /**
  * Tracks changes made to Todo tasks.
@@ -57,7 +58,8 @@ public class TaskHistory {
      * The timestamp when the change was made
      */
     @Column(name = "changed_date")
-    private LocalDateTime changeDate;
+    @CreationTimestamp
+    private Instant changeDate;
 
     /**
      * The name or ID of the user who made the change). Feel free to leave it null for now.

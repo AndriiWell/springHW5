@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: hw-5
+      id: hw-5-001
       author: Andrii Muzika de le Valera
       changes:
         - createTable:

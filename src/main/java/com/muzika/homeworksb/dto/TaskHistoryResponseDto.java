@@ -1,13 +1,13 @@
 package com.muzika.homeworksb.dto;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 public record TaskHistoryResponseDto(
     Long id,
     Long todoId,
     String oldState,
     String newState,
-    LocalDateTime changeDate,
+    Instant changeDate,
     String changedBy
 ) {
     public TaskHistoryResponseDto setTodoId(Long todosId) {

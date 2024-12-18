@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: hw-5-005
+      author: Andrii Muzika
+      changes:
+        - sql: ALTER TABLE task_history MODIFY COLUMN changed_date TIMESTAMP(4) NOT NULL;
+      rollback:
+        - sql: ALTER TABLE task_history MODIFY COLUMN changed_date TIMESTAMP NOT NULL;

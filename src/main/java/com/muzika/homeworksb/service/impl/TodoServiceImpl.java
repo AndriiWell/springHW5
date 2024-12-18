@@ -1,9 +1,7 @@
 package com.muzika.homeworksb.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.muzika.homeworksb.dto.TaskHistoryResponseDto;
 import com.muzika.homeworksb.dto.TodoCreateDto;
 import com.muzika.homeworksb.dto.TodoResponseDto;
@@ -17,6 +15,7 @@ import com.muzika.homeworksb.repository.TaskHistoryRepository;
 import com.muzika.homeworksb.repository.TodoRepository;
 import com.muzika.homeworksb.service.TodoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,11 +31,14 @@ public class TodoServiceImpl implements TodoService {
     private final TodoMapper todoMapper;
     private final TaskHistoryMapper historyMapper;
 
+    @Autowired
+    private final ObjectMapper objectMapper;
+
     @Override
     public TodoResponseDto save(TodoCreateDto createDto) {
 
         Todo todo = todoMapper.toModel(createDto);
-        todo.setCreatedDate(LocalDateTime.now());
+        // todo.setCreatedDate(LocalDateTime.now()); instead added annotation @CreationTimestamp
 
         return todoMapper.toDto(
             todoRepository.save(
@@ -78,13 +80,10 @@ public class TodoServiceImpl implements TodoService {
         String stringifiedOld;
         String stringifiedNew;
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-            objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
             stringifiedOld = objectMapper.writeValueAsString(todo);
         } catch (JsonProcessingException e) {
             System.err.println("Impossible to jsonize todo instance");
-            stringifiedOld = todo.toString();
+            throw new RuntimeException("Impossible to jsonize old state");
         }
 
         todo.setTitle(updateDto.title());
@@ -95,9 +94,6 @@ public class TodoServiceImpl implements TodoService {
         todo.setUpdatedDate(LocalDateTime.now());
 
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-            objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
             stringifiedNew = objectMapper.writeValueAsString(todo);
         } catch (JsonProcessingException e) {
             System.err.println("Impossible to jsonize todo instance");
@@ -108,8 +104,8 @@ public class TodoServiceImpl implements TodoService {
         taskHistory.setTodo(todo);
         taskHistory.setOldState(stringifiedOld);
         taskHistory.setNewState(stringifiedNew);
-        taskHistory.setChangeDate(LocalDateTime.now());
-        //taskHistory.setChangedBy();
+        //taskHistory.setChangeDate(LocalDateTime.now()); instead added annotation @CreationTimestamp
+        //taskHistory.setChangedBy(); // tODO in 6th HW
 
         taskHistoryRepository.save(taskHistory);
 
@@ -122,6 +118,10 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     public List<TaskHistoryResponseDto> findHistoryById(Long id) {
+        if (!todoRepository.existsById(id)) {
+            throw new EntityNotFoundException("Not found todo by id: " + id);
+        }
+
         return todoRepository.findHistoryById(id).stream()
             .map(history -> {
                 TaskHistoryResponseDto taskHistoryResponseDto = historyMapper.toDto(history);
