@@ -15,6 +15,7 @@ import com.muzika.homeworksb.repository.TaskHistoryRepository;
 import com.muzika.homeworksb.repository.TodoRepository;
 import com.muzika.homeworksb.service.TodoService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Log4j2
 @RequiredArgsConstructor
 @Service
 public class TodoServiceImpl implements TodoService {
@@ -38,7 +40,7 @@ public class TodoServiceImpl implements TodoService {
     public TodoResponseDto save(TodoCreateDto createDto) {
 
         Todo todo = todoMapper.toModel(createDto);
-        // todo.setCreatedDate(LocalDateTime.now()); instead added annotation @CreationTimestamp
+        // todo.setCreatedDate(LocalDateTime.now()); instead this row added annotation @CreationTimestamp
 
         return todoMapper.toDto(
             todoRepository.save(
@@ -82,7 +84,7 @@ public class TodoServiceImpl implements TodoService {
         try {
             stringifiedOld = objectMapper.writeValueAsString(todo);
         } catch (JsonProcessingException e) {
-            System.err.println("Impossible to jsonize todo instance");
+            log.warn("Impossible to jsonize todo instance");
             throw new RuntimeException("Impossible to jsonize old state");
         }
 
@@ -96,7 +98,7 @@ public class TodoServiceImpl implements TodoService {
         try {
             stringifiedNew = objectMapper.writeValueAsString(todo);
         } catch (JsonProcessingException e) {
-            System.err.println("Impossible to jsonize todo instance");
+            log.warn("Impossible to jsonize todo instance");
             stringifiedNew = todo.toString();
         }
 
@@ -104,7 +106,6 @@ public class TodoServiceImpl implements TodoService {
         taskHistory.setTodo(todo);
         taskHistory.setOldState(stringifiedOld);
         taskHistory.setNewState(stringifiedNew);
-        //taskHistory.setChangeDate(LocalDateTime.now()); instead added annotation @CreationTimestamp
         //taskHistory.setChangedBy(); // tODO in 6th HW
 
         taskHistoryRepository.save(taskHistory);
@@ -125,7 +126,7 @@ public class TodoServiceImpl implements TodoService {
         return todoRepository.findHistoryById(id).stream()
             .map(history -> {
                 TaskHistoryResponseDto taskHistoryResponseDto = historyMapper.toDto(history);
-                return taskHistoryResponseDto.setTodoId(id);
+                return taskHistoryResponseDto; //.setTodoId(id); unnessesary, because I added mapping in TaskHistoryMapper
             })
             .toList();
     }

@@ -10,14 +10,15 @@ public record TaskHistoryResponseDto(
     Instant changeDate,
     String changedBy
 ) {
-    public TaskHistoryResponseDto setTodoId(Long todosId) {
-        return new TaskHistoryResponseDto(
-            this.id,
-            todosId,
-            this.oldState,
-            this.newState,
-            this.changeDate,
-            this.changedBy
-        );
-    }
+    // Unnecessary, because was added mapping in TaskHistoryMapper.
+//    public TaskHistoryResponseDto setTodoId(Long todosId) {
+//        return new TaskHistoryResponseDto(
+//            this.id,
+//            todosId,
+//            this.oldState,
+//            this.newState,
+//            this.changeDate,
+//            this.changedBy
+//        );
+//    }
 }

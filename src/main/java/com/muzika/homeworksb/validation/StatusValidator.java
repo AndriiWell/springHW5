@@ -7,7 +7,9 @@ import jakarta.validation.ConstraintValidatorContext;
 public class StatusValidator implements ConstraintValidator<Status, StatusEnum> {
     @Override
     public boolean isValid(StatusEnum status, ConstraintValidatorContext constraintValidatorContext) {
-        if (null == status) {
+        // Check for status values executes before enter to this method, so to check its value here no sence.
+        // Maybe some complex logic need to do, but values of StatusEnum Spring can check by it own.
+        if (null == status) { // This operation has no sense, the Spring will do it before entrance to the method.
             return false;
         }
         boolean isValid = StatusEnum.COMPLETED == status
@@ -17,10 +19,6 @@ public class StatusValidator implements ConstraintValidator<Status, StatusEnum> 
             || StatusEnum.IN_QA_HANDS == status
             || StatusEnum.REVIEW == status
             || StatusEnum.READY_FOR_QA == status;
-
-        if (!isValid) {
-            throw new RuntimeException("Status has is not correct value!");
-        }
 
         return isValid;
     }
