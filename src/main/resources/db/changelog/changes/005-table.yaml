@@ -1,0 +1,8 @@
+databaseChangeLog: # this file only for set up work with rollbacks view mvn: mvn liquibase:rollback -Dliquibase.propertyFile=src/main/resources/liquibase.properties -Dliquibase.rollbackCount=1
+  - changeSet:
+      id: hw-5-005
+      author: Andrii Muzika
+      changes:
+        - sql: ALTER TABLE task_history MODIFY COLUMN changed_date TIMESTAMP(6) NOT NULL;
+      rollback:
+        - sql: ALTER TABLE task_history MODIFY COLUMN changed_date TIMESTAMP NOT NULL;

@@ -1,0 +1,43 @@
+databaseChangeLog:
+  - changeSet:
+      id: hw-5-002
+      author: Andrii Muzika
+      changes:
+        - createTable:
+            tableName: task_history
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: todo_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: old_state
+                  type: text
+              - column:
+                  name: new_state
+                  type: text
+              - column:
+                  name: changed_date
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: changed_by
+                  type: varchar(20)
+        - addAutoIncrement:
+            columnDataType: bigint
+            columnName: id
+            defaultOnNull: false
+            generationType: always
+            startWith: 1
+            tableName: task_history
+      rollback:
+        - dropTable:
+            tableName: task_history
