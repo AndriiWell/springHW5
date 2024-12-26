@@ -10,6 +10,8 @@ import java.util.List;
 public interface TodoService {
     TodoResponseDto save(TodoCreateDto createDto);
 
+    TodoResponseDto save(String email, TodoCreateDto createDto);
+
     TodoResponseDto findById(Long id);
 
     List<TodoResponseDto> findAll();
@@ -18,5 +20,9 @@ public interface TodoService {
 
     TodoResponseDto update(Long id, TodoUpdateDto updateDto);
 
+    TodoResponseDto update(String email, Long id, TodoUpdateDto updateDto);
+
     List<TaskHistoryResponseDto> findHistoryById(Long id);
+
+    List<TaskHistoryResponseDto> findHistoryById(String email, Long id);
 }

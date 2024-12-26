@@ -1,0 +1,16 @@
+databaseChangeLog:
+    - changeSet:
+          id: hw-5-009
+          author: Andrii Muzika
+          changes:
+              - addForeignKeyConstraint:
+                    baseTableName: todos
+                    baseColumnNames: user_id
+                    referencedTableName: users
+                    referencedColumnNames: id
+                    constraintName: fk_todos_user_id
+                    onDelete: SET NULL
+          rollback:
+              - dropForeignKeyConstraint:
+                    baseTableName: todos
+                    constraintName: fk_todos_user_id

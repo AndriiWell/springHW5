@@ -5,6 +5,10 @@ Run in Command Prompt terminal, otherwise use another syntax for commands below!
    ```shell
     curl.exe --location "http://localhost:8000/todos" --header "Content-Type: application/json" --data "{\"title\":\"Wake up\",\"dueDate\":\"2024-12-16T11:30:00\",\"priority\":\"LOW\"}"
     ```
+   TOKEN example
+    ```shell
+    curl.exe --location "http://localhost:8000/todos" --header "Content-Type: application/json" --data "{\"title\":\"Wake up\",\"dueDate\":\"2024-12-16T11:30:00\",\"priority\":\"LOW\"}"   --header "Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0ZXN0QGV4YW0uY29tIiwiaWF0IjoxNzM1MjIyNjQyLCJleHAiOjE3MzUyMjI5NDJ9.5ffRuvjuTJQ9rvhFW5HZ6BLaDl10xhkUTviSRMGgFUkrnp2ZIbHiEh-GxtlaOpX6"
+    ```
 2. Send a valid request to update an existed todo
    ```shell
     curl.exe --request PUT --location "http://localhost:8000/todos/1" --header "Content-Type: application/json" --data "{\"title\":\"Wake up early\",\"description\":\"A lot of ....\",\"dueDate\":\"2024-12-16T10:30:00\",\"status\":\"TODO\"}"
@@ -13,9 +17,17 @@ Run in Command Prompt terminal, otherwise use another syntax for commands below!
    ```shell
     curl.exe --request PUT --location "http://localhost:8000/todos/1" --header "Content-Type: application/json" --data "{\"title\":\"Wake up early\",\"dueDate\":\"2024-12-16T10:30:00\",\"priority\":\"HIGH\",\"status\":\"IN_QA_HANDS\"}"
     ```
+   TOKEN example
+    ```shell
+    curl.exe --request PUT --location "http://localhost:8000/todos/6" --header "Content-Type: application/json" --data "{\"title\":\"Wake up early\",\"dueDate\":\"2024-12-16T10:30:00\",\"priority\":\"HIGH\",\"status\":\"IN_QA_HANDS\"}" --header "Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0ZXN0QGV4YW0uY29tIiwiaWF0IjoxNzM1MjIyNjQyLCJleHAiOjE3MzUyMjI5NDJ9.5ffRuvjuTJQ9rvhFW5HZ6BLaDl10xhkUTviSRMGgFUkrnp2ZIbHiEh-GxtlaOpX6"
+    ```
 3. Get list of changes
     ```shell
-    curl.exe --location "http://localhost:8000/todos/1/history" --header "Content-Type: application/json"
+    curl.exe --location "http://localhost:8000/todos/6/history" --header "Content-Type: application/json"
+    ```
+   TOKEN example
+    ```shell
+    curl.exe --location "http://localhost:8000/todos/6/history" --header "Content-Type: application/json" --header "Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0ZXN0QGV4YW0uY29tIiwiaWF0IjoxNzM1MjIyOTgzLCJleHAiOjE3MzUyMjMyODN9.j6ThDnVJmMQ0Td9cwB8rIR0_UHCWjLPB04KZb0dh48p6B0e-9dZElnWOA3A7OBq1"
     ```
 4. Detele task
     ```shell
@@ -79,5 +91,13 @@ Run in Command Prompt terminal, otherwise use another syntax for commands below!
    ```shell
    curl.exe --request PUT --location "http://localhost:8000/todos/8" --header "Content-Type: application/json" --data "{\"title\":\"Task 1\",\"dueDate\":\"2024-12-16T11:30:01\",\"status\":\"LOWi\"}"
    ```
-17. end
+17. Registration of a user
+    ```shell
+    curl.exe --location "http://localhost:8000/auth/register" --header "Content-Type: application/json" --data "{\"email\":\"test@exam.com\",\"password\":\"password123\",\"repeatPassword\":\"password123\"}"
+    ```
+18. Login
+    ```shell
+    curl.exe --location "http://localhost:8000/auth/login" --header "Content-Type: application/json" --data "{\"email\":\"test@exam.com\",\"password\":\"password123\"}"
+    ```
+19. end
 

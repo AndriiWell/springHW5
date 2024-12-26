@@ -9,3 +9,17 @@ databaseChangeLog:
       file: db/changelog/changes/004-table-add-relation-todo-to-task_history.yaml
   - include:
       file: db/changelog/changes/005-table.yaml
+  - include:
+      file: db/changelog/changes/006-table-add-roles.yaml
+#  - include:
+##      file: db/changelog/changes/010-table-roles-add-autoincrement.yaml
+#  - include:
+#      file: db/changelog/changes/010-table-users-add-autoincrement.yaml
+  - include:
+      file: db/changelog/changes/007-table-add-users.yaml
+  - include:
+      file: db/changelog/changes/008-table-add-user_roles.yaml
+  - include:
+      file: db/changelog/changes/009-table-add-relation-users-to-todos.yaml
+  - include:
+      file: db/changelog/changes/011-data-add-roles-default.yaml

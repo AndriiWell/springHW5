@@ -8,6 +8,7 @@ import com.muzika.homeworksb.service.TodoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,13 +28,15 @@ public class TodoController {
     private final TodoService service;
 
     @PostMapping
-    public TodoResponseDto create(@RequestBody @Valid TodoCreateDto createDto) {
-        return service.save(createDto);
+    public TodoResponseDto create(Authentication authentication, @RequestBody @Valid TodoCreateDto createDto) {
+        String userName = authentication.getName();
+        return service.save(userName, createDto);
     }
 
     @PutMapping("/{id}")
-    public TodoResponseDto update(@PathVariable Long id, @RequestBody @Valid TodoUpdateDto updateDto) {
-        return service.update(id, updateDto);
+    public TodoResponseDto update(Authentication authentication, @PathVariable Long id, @RequestBody @Valid TodoUpdateDto updateDto) {
+        String userName = authentication.getName();
+        return service.update(userName, id, updateDto);
     }
 
     @DeleteMapping("/{id}")
@@ -43,13 +46,8 @@ public class TodoController {
     }
 
     @GetMapping("/{id}/history")
-    public List<TaskHistoryResponseDto> history(@PathVariable Long id) {
-        return service.findHistoryById(id);
+    public List<TaskHistoryResponseDto> history(Authentication authentication, @PathVariable Long id) {
+        String userName = authentication.getName();
+        return service.findHistoryById(userName, id);
     }
-
-//    I do not understand why, but POSt do not want to work before at least one GET!
-//    @GetMapping()
-//    public String history() {
-//        return "service.findHistoryById(id)";
-//    }
 }
