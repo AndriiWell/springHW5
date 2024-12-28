@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: hw-5-011
+      author: Andrii Muzika
+      changes:
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: name
+                  value: 'CLIENT'
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: name
+                  value: 'admin'
+      rollback:
+        - delete:
+            tableName: roles
+            where: "name = 'CLIENT'"
+        - delete:
+            tableName: roles
+            where: "name = 'admin'"

@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: hw-5-001
-      author: Andrii Muzika de le Valera
+      id: hw-5-007
+      author: Andrii Muzika
       changes:
         - createTable:
-            tableName: todos
+            tableName: users
             columns:
               - column:
                   name: id
@@ -13,40 +13,34 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: title
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: password
                   type: varchar(255)
                   constraints:
                     nullable: false
               - column:
-                  name: description
-                  type: text
-              - column:
-                  name: due_date
-                  type: datetime
-              - column:
-                  name: priority
-                  type: varchar(15)
-              - column:
-                  name: status
-                  type: varchar(20)
+                  name: is_deleted
+                  type: bit
+                  constraints:
+                    defaultValue: false
               - column:
                   name: created_date
                   type: timestamp
               - column:
                   name: updated_date
                   type: timestamp
-              - column:
-                  name: user_id
-                  type: bigint
-                  constraints:
-                    nullable: true
         - addAutoIncrement:
             columnDataType: bigint
             columnName: id
             defaultOnNull: false
             generationType: always
             startWith: 1
-            tableName: todos
+            tableName: users
       rollback:
         - dropTable:
-            tableName: todos
+            tableName: users

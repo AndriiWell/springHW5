@@ -76,5 +76,5 @@ public class Todo {
      * Hardcode value 1 for now. We will replace it when Security is implemented.
      */
     @Column(name = "user_id")
-    private Long userId = 1L;
+    private Long userId;
 }

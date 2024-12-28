@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: hw-5-010b
+      author: Andrii Muzika
+      changes:
+        - sql:
+            dbms: mysql
+            sql: ALTER TABLE users MODIFY COLUMN id BIGINT AUTO_INCREMENT, ADD PRIMARY KEY (id);
+      rollback:
+        - sql:
+            dbms: mysql
+            sql: ALTER TABLE users MODIFY COLUMN id BIGINT;
