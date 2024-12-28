@@ -15,5 +15,6 @@ public interface TodoMapper {
     @Mapping(target = "status", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "updatedDate", ignore = true)
+    @Mapping(target = "userId", ignore = true)
     Todo toModel(TodoCreateDto todoCreateDto);
 }

@@ -42,7 +42,6 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public TodoResponseDto save(TodoCreateDto createDto) {
         Todo todo = todoMapper.toModel(createDto);
-        // todo.setCreatedDate(LocalDateTime.now()); instead this row added annotation @CreationTimestamp
 
         return todoMapper.toDto(
             todoRepository.save(
@@ -54,7 +53,7 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public TodoResponseDto save(String email, TodoCreateDto createDto) {
         User currentUser = userRepository.findByEmail(email)
-            .orElseThrow(() -> new RuntimeException("Can't find user by email " + email));
+            .orElseThrow(() -> new EntityNotFoundException("Can't find user by email " + email));
         Todo todo = todoMapper.toModel(createDto);
 
         todo.setUserId(currentUser.getId());
@@ -123,7 +122,6 @@ public class TodoServiceImpl implements TodoService {
         taskHistory.setTodo(todo);
         taskHistory.setOldState(stringifiedOld);
         taskHistory.setNewState(stringifiedNew);
-        //taskHistory.setChangedBy(); // tODO in 6th HW
 
         taskHistoryRepository.save(taskHistory);
 
@@ -169,7 +167,7 @@ public class TodoServiceImpl implements TodoService {
         taskHistory.setNewState(stringifiedNew);
 
         User currentUser = userRepository.findByEmail(email)
-            .orElseThrow(() -> new RuntimeException("Can't find user by email " + email));
+            .orElseThrow(() -> new EntityNotFoundException("Can't find user by email " + email));
         taskHistory.setChangedBy(currentUser.getUsername());
 
         taskHistoryRepository.save(taskHistory);
@@ -202,7 +200,7 @@ public class TodoServiceImpl implements TodoService {
         }
 
         User currentUser = userRepository.findByEmail(email)
-            .orElseThrow(() -> new RuntimeException("Can't find user by email " + email));
+            .orElseThrow(() -> new EntityNotFoundException("Can't find user by email " + email));
 
         return todoRepository.findHistoryById(id).stream()
             .map(history -> {

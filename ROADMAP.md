@@ -7,7 +7,7 @@ Run in Command Prompt terminal, otherwise use another syntax for commands below!
     ```
    TOKEN example
     ```shell
-    curl.exe --location "http://localhost:8000/todos" --header "Content-Type: application/json" --data "{\"title\":\"Wake up\",\"dueDate\":\"2024-12-16T11:30:00\",\"priority\":\"LOW\"}"   --header "Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0ZXN0QGV4YW0uY29tIiwiaWF0IjoxNzM1MjIyNjQyLCJleHAiOjE3MzUyMjI5NDJ9.5ffRuvjuTJQ9rvhFW5HZ6BLaDl10xhkUTviSRMGgFUkrnp2ZIbHiEh-GxtlaOpX6"
+    curl.exe --location "http://localhost:8000/todos" --header "Content-Type: application/json" --data "{\"title\":\"Wake up\",\"dueDate\":\"2024-12-16T11:30:00\",\"priority\":\"LOW\"}"   --header "Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0ZXN0QGV4YW0uY29tIiwiaWF0IjoxNzM1NDE0NTI0LCJleHAiOjE3MzU0MTQ4MjR9.qggqQ-o3wA8YILtvLgnnJwf7utAkM90_2J6XFIvbtyGYw0Qebq6o_VGnFlCpj69u"
     ```
 2. Send a valid request to update an existed todo
    ```shell
@@ -19,7 +19,7 @@ Run in Command Prompt terminal, otherwise use another syntax for commands below!
     ```
    TOKEN example
     ```shell
-    curl.exe --request PUT --location "http://localhost:8000/todos/6" --header "Content-Type: application/json" --data "{\"title\":\"Wake up early\",\"dueDate\":\"2024-12-16T10:30:00\",\"priority\":\"HIGH\",\"status\":\"IN_QA_HANDS\"}" --header "Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0ZXN0QGV4YW0uY29tIiwiaWF0IjoxNzM1MjIyNjQyLCJleHAiOjE3MzUyMjI5NDJ9.5ffRuvjuTJQ9rvhFW5HZ6BLaDl10xhkUTviSRMGgFUkrnp2ZIbHiEh-GxtlaOpX6"
+    curl.exe --request PUT --location "http://localhost:8000/todos/1" --header "Content-Type: application/json" --data "{\"title\":\"Wake up early\",\"dueDate\":\"2024-12-16T10:30:00\",\"priority\":\"HIGH\",\"status\":\"IN_QA_HANDS\"}" --header "Authorization: eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0ZXN0QGV4YW0uY29tIiwiaWF0IjoxNzM1NDE0NTI0LCJleHAiOjE3MzU0MTQ4MjR9.qggqQ-o3wA8YILtvLgnnJwf7utAkM90_2J6XFIvbtyGYw0Qebq6o_VGnFlCpj69u"
     ```
 3. Get list of changes
     ```shell
@@ -27,7 +27,7 @@ Run in Command Prompt terminal, otherwise use another syntax for commands below!
     ```
    TOKEN example
     ```shell
-    curl.exe --location "http://localhost:8000/todos/6/history" --header "Content-Type: application/json" --header "Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0ZXN0QGV4YW0uY29tIiwiaWF0IjoxNzM1MjIyOTgzLCJleHAiOjE3MzUyMjMyODN9.j6ThDnVJmMQ0Td9cwB8rIR0_UHCWjLPB04KZb0dh48p6B0e-9dZElnWOA3A7OBq1"
+    curl.exe --location "http://localhost:8000/todos/1/history" --header "Content-Type: application/json" --header "Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0ZXN0QGV4YW0uY29tIiwiaWF0IjoxNzM1NDE0NTI0LCJleHAiOjE3MzU0MTQ4MjR9.qggqQ-o3wA8YILtvLgnnJwf7utAkM90_2J6XFIvbtyGYw0Qebq6o_VGnFlCpj69u"
     ```
 4. Detele task
     ```shell

@@ -27,19 +27,20 @@ public class UserServiceImpl implements UserService {
     private final UserRoleRepository userRoleRepository;
 
     @Override
-    @Transactional(timeout = 1)
+    @Transactional(timeout = 1, rollbackFor = RegistrationException.class)
     public UserRegistrationResponseDto register(UserRegistrationRequestDto request) throws RegistrationException {
         if (userRepository.findByEmail(request.email()).isPresent()) {
             throw new RegistrationException("Unable to complete registration.");
         }
-        UserRole userRole = userRoleRepository.findFirstByName(String.valueOf(RoleEnum.CLIENT))
-            .orElseThrow(() -> new RegistrationException("Role not found"));
+        // All users register with role client.
+        UserRole userRole = userRoleRepository.findByName(String.valueOf(RoleEnum.CLIENT))
+            .orElseThrow(() -> new RegistrationException("Role " + RoleEnum.CLIENT + " not found"));
 
         User user = new User();
         user.setPassword(passwordEncoder.encode(request.password()));
         user.setEmail(request.email());
         user.setRoles(List.of(userRole));
-        User savedUser = userRepository.save(user);
-        return userMapper.toUserResponse(savedUser);
+
+        return userMapper.toUserResponse(userRepository.save(user));
     }
 }

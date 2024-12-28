@@ -1,3 +1,8 @@
+**Tu run:**
+    run app and docker should up, via pom dependencies! Otherwise try to up docker.
+**Or run script `run_docker_commands.ps1` in shell terminal** 
+But in the end execute `cmd` command and last command `docker exec -i mysql_hometask_5and6 mysql -u root -p11111<.\db_init.sql` in cmd, and exit.
+**Or run code below, step by step:**
 To run script which creates database and set privileges execute commands below:
     Once load mysql:
         docker pull mysql:latest

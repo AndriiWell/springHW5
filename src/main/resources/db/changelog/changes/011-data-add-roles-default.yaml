@@ -3,14 +3,22 @@ databaseChangeLog:
       id: hw-5-011
       author: Andrii Muzika
       changes:
-        - sql:
-            dbms: mysql
-            sql: |
-              INSERT INTO roles (name) VALUES ('CLIENT');
-              INSERT INTO roles (name) VALUES ('admin');
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: name
+                  value: 'CLIENT'
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: name
+                  value: 'admin'
       rollback:
-        - sql:
-            dbms: mysql
-            sql: |
-              DELETE FROM roles WHERE name = 'CLIENT';
-              DELETE FROM roles WHERE name = 'admin';
+        - delete:
+            tableName: roles
+            where: "name = 'CLIENT'"
+        - delete:
+            tableName: roles
+            where: "name = 'admin'"

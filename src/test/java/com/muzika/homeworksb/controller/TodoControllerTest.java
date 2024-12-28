@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.muzika.homeworksb.dto.TodoCreateDto;
 import com.muzika.homeworksb.dto.TodoResponseDto;
 import com.muzika.homeworksb.enums.PriorityEnum;
+import com.muzika.homeworksb.enums.RoleEnum;
 import com.muzika.homeworksb.model.User;
 import com.muzika.homeworksb.model.UserRole;
 import com.muzika.homeworksb.repository.UserRepository;
@@ -29,6 +30,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -75,7 +77,7 @@ class TodoControllerTest {
         teardown(dataSource, applicationContext);
 
         UserRole userRole = new UserRole();
-        userRole.setName("client");
+        userRole.setName(String.valueOf(RoleEnum.CLIENT));
         userRoleRepository.save(userRole);
 
         User user = new User();
@@ -85,9 +87,9 @@ class TodoControllerTest {
         userRepository.save(user);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(
-            "testUser",
-            "password",
-            AuthorityUtils.createAuthorityList("client")
+            user.getEmail(),
+            user.getPassword(),
+            AuthorityUtils.createAuthorityList(userRole.getName())
         );
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
         securityContext.setAuthentication(authentication);
@@ -104,6 +106,7 @@ class TodoControllerTest {
 
     @Test
     @DisplayName("Create a new todo - valid request")
+    @WithMockUser(username = "testUser", roles = {"CLIENT"})
     void createTodo_ValidRequest_Success() throws Exception {
         // Arrange
         TodoCreateDto requestDto = new TodoCreateDto(
@@ -116,7 +119,6 @@ class TodoControllerTest {
         String jsonRequest = objectMapper.writeValueAsString(requestDto);
 
         Authentication authenticatedUser = SecurityContextHolder.getContext().getAuthentication();
-
         // Act
         MvcResult result = mockMvc.perform(post("/todos")
                 .principal(authenticatedUser)
@@ -180,6 +182,7 @@ class TodoControllerTest {
 
     @Test
     @DisplayName("Create a new todo with extra field and without description - success request")
+    @WithMockUser(username = "testUser", roles = {"client"})
     void createTodo_ExtraFieldAndEmptyDescription_Success() throws Exception {
         // Arrange
         String invalidRequest = """

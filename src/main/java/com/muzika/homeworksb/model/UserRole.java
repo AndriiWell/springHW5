@@ -22,10 +22,6 @@ public class UserRole implements GrantedAuthority {
 
     private String name;
 
-//    public UserRole(String name) {
-//        this.name = name;
-//    }
-
     @Override
     public String getAuthority() {
         return name;
